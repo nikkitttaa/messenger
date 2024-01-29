@@ -17,11 +17,9 @@ class MyTextField extends StatelessWidget {
       margin: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height / 90),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.sizeOf(context).width / 20),
-          
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
           border: Border.all(color: Colors.green)),
-
       child: TextField(
         controller: controller,
         obscureText: obsecureText,

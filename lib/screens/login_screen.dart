@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
-import 'package:messanger_test/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final void Function()? onTap;
+  const LoginScreen({super.key, required this.onTap});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -14,10 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
-  void signIn(){
-    
-  }
+  void signIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const Text('no accaunt? '),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
-                    },
+                    onTap: widget.onTap,
                     child: const Text(
                       'Register now',
                       style: TextStyle(fontWeight: FontWeight.bold),

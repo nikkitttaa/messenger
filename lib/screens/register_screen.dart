@@ -3,16 +3,24 @@ import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final void Function()? onTap;
+
+  const RegisterScreen({super.key, required this.onTap});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+
+  void signUp(){
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +61,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 50,
               ),
-              //button Sign In
-              MyButton(onTap: () {}, btnText: 'Sign Up'),
+
+
+              //button Sign Up
+              MyButton(onTap: signUp, btnText: 'Sign Up'),
 
               const SizedBox(
                 height: 50,
@@ -67,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   const Text('have an account? '),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: widget.onTap,
                     child: const Text(
                       'Login now',
                       style: TextStyle(fontWeight: FontWeight.bold),

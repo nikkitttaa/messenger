@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
-import 'package:messanger_test/screens/register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-
-  void signIn(){
-    
-  }
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,26 +44,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: 'enter password',
                   obsecureText: true),
 
-              const SizedBox(
-                height: 50,
-              ),
-              //button Sign In
-              MyButton(onTap: signIn, btnText: 'Sign In'),
+              //confirm password field
+              MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'confirm password',
+                  obsecureText: true),
 
               const SizedBox(
                 height: 50,
               ),
-              //go to Sign Up screen
+              //button Sign In
+              MyButton(onTap: () {}, btnText: 'Sign Up'),
+
+              const SizedBox(
+                height: 50,
+              ),
+
+
+              //go to Sign In screen
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('no accaunt? '),
+                  const Text('have an account? '),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
-                    },
+                    onTap: () {},
                     child: const Text(
-                      'Register now',
+                      'Login now',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )

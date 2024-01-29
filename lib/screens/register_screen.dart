@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
@@ -17,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
   void signUp() async {
     if (passwordController.text != confirmPasswordController.text) {
@@ -27,8 +30,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
-      await authService.signUpWithEmailAndPassword(
-          emailController.text, passwordController.text);
+      await authService.signUpWithEmailAndPassword(emailController.text,
+          passwordController.text, usernameController.text);
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -53,6 +56,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 100,
               ),
+              //login field
+              MyTextField(
+                  controller: usernameController,
+                  hintText: 'enter username',
+                  obsecureText: false),
+
               //emailfield
               MyTextField(
                   controller: emailController,

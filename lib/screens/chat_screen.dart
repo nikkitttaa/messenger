@@ -7,10 +7,12 @@ import 'package:messanger_test/components/my_text_field.dart';
 class ChatScreen extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserID;
+  final String receiverUsername;
   const ChatScreen(
       {super.key,
       required this.receiverUserEmail,
-      required this.receiverUserID});
+      required this.receiverUserID,
+      required this.receiverUsername});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -27,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
           widget.receiverUserID, _messageController.text);
 
       setState(() {
-         _messageController.clear();
+        _messageController.clear();
       });
     }
   }
@@ -36,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Text(widget.receiverUsername),
       ),
       body: Column(
         children: [
@@ -84,7 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
       alignment: aligment,
       child: Column(
         children: [
-          Text(data['senderEmail']),
+          Text(data['username']),
           Text(data['message']),
         ],
       ),

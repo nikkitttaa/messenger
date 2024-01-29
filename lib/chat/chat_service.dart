@@ -12,15 +12,26 @@ class ChatService extends ChangeNotifier {
     //user info
     final String currentUserID = _auth.currentUser!.uid;
     final String currentUserEmail = _auth.currentUser!.email.toString();
+    final String currentUsername;
+
+    final userCollection = FirebaseFirestore.instance.collection('users');
+    final querySnapshot =
+        await userCollection.where('email', isEqualTo: currentUserEmail).get();
+    final documents = querySnapshot.docs;
+
+    currentUsername = documents[0].data()['username'];
+
     final Timestamp timestamp = Timestamp.now();
 
     //new messege
     Message newMessege = Message(
-        senderID: currentUserID,
-        senderEmail: currentUserEmail,
-        receiverID: receiverID,
-        message: message,
-        timestamp: timestamp);
+      senderID: currentUserID,
+      senderEmail: currentUserEmail,
+      senderUsername: currentUsername,
+      receiverID: receiverID,
+      message: message,
+      timestamp: timestamp,
+    );
 
     List<String> ids = [currentUserID, receiverID];
     ids.sort();

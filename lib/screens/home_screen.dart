@@ -69,21 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildUserListItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-    if (_auth.currentUser!.email != data['email']) {
+    if (_auth.currentUser?.email != data['email']) {
       return ListTile(
         title: Container(
             decoration: const BoxDecoration(color: Colors.green),
-            child: Text(data['email'])),
+            child: Text(data['username'])),
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChatScreen(
-                  receiverUserEmail: data['email'],
-                  receiverUserID: data['uid']
-              )
-            )
-          );
+                  builder: (context) => ChatScreen(
+                        receiverUserEmail: data['email'],
+                        receiverUserID: data['uid'],
+                        receiverUsername: data['username'],
+                      )));
         },
       );
     } else {

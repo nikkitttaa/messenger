@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';

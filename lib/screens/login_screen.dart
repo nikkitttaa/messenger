@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
       await authService.signInWithEmailAndPawword(
           emailController.text, passwordController.text);
     } catch (e) {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }

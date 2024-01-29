@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "432589541248",
-    "project_id": "messenger-58be3",
-    "storage_bucket": "messenger-58be3.appspot.com"
+    "project_number": "726368943458",
+    "project_id": "messagertask",
+    "storage_bucket": "messagertask.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:432589541248:android:5bf4da05e36f854a96fb65",
+        "mobilesdk_app_id": "1:726368943458:android:c67175d31d2e916e25803b",
         "android_client_info": {
           "package_name": "com.example.messanger_test"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA2m5kq1Imsp7Tp1jh3CIG6gOnwsVy2Hw0"
+          "current_key": "AIzaSyCYTcNYF_G12y080n6ZlONGsKbc67E_ykc"
         }
       ],
       "services": {

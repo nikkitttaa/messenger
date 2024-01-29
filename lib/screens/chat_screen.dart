@@ -26,7 +26,9 @@ class _ChatScreenState extends State<ChatScreen> {
       await _chatService.sendMessage(
           widget.receiverUserID, _messageController.text);
 
-      _messageController.clear();
+      setState(() {
+         _messageController.clear();
+      });
     }
   }
 

@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAZRKP-FuJbsvyHXJAGSrE40o6akhMUGQ8',
-    appId: '1:432589541248:web:edb760639bc34c9696fb65',
-    messagingSenderId: '432589541248',
-    projectId: 'messenger-58be3',
-    authDomain: 'messenger-58be3.firebaseapp.com',
-    storageBucket: 'messenger-58be3.appspot.com',
-    measurementId: 'G-E785NQE65K',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA2m5kq1Imsp7Tp1jh3CIG6gOnwsVy2Hw0',
-    appId: '1:432589541248:android:5bf4da05e36f854a96fb65',
-    messagingSenderId: '432589541248',
-    projectId: 'messenger-58be3',
-    storageBucket: 'messenger-58be3.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBX_XG9wB7C0v5pkIo5NQheiDyUbP3nKFk',
-    appId: '1:432589541248:ios:07b6d5440da4d3ce96fb65',
-    messagingSenderId: '432589541248',
-    projectId: 'messenger-58be3',
-    storageBucket: 'messenger-58be3.appspot.com',
-    iosBundleId: 'com.example.messangerTest',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBX_XG9wB7C0v5pkIo5NQheiDyUbP3nKFk',
-    appId: '1:432589541248:ios:c7874daa3c89a55896fb65',
-    messagingSenderId: '432589541248',
-    projectId: 'messenger-58be3',
-    storageBucket: 'messenger-58be3.appspot.com',
-    iosBundleId: 'com.example.messangerTest.RunnerTests',
+    apiKey: 'AIzaSyCYTcNYF_G12y080n6ZlONGsKbc67E_ykc',
+    appId: '1:726368943458:android:c67175d31d2e916e25803b',
+    messagingSenderId: '726368943458',
+    projectId: 'messagertask',
+    storageBucket: 'messagertask.appspot.com',
   );
 }

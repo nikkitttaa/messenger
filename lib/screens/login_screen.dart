@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
+import 'package:messanger_test/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   final void Function()? onTap;
@@ -14,7 +16,18 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void signIn() {}
+  void signIn() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signInWithEmailAndPawword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

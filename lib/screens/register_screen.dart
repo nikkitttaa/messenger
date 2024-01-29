@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:messanger_test/components/my_button.dart';
 import 'package:messanger_test/components/my_text_field.dart';
+import 'package:messanger_test/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   final void Function()? onTap;
@@ -12,14 +16,25 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  void signUp() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Пароли не совпадают!')));
+    }
 
-  void signUp(){
-    
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signUpWithEmailAndPassword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   @override
@@ -62,14 +77,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50,
               ),
 
-
               //button Sign Up
               MyButton(onTap: signUp, btnText: 'Sign Up'),
 
               const SizedBox(
                 height: 50,
               ),
-
 
               //go to Sign In screen
               Row(

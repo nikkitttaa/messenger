@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:messanger_test/chat/chat_service.dart';
-import 'package:messanger_test/components/my_text_field.dart';
+import 'package:messanger_test/components/colors.dart';
+import 'package:messanger_test/components/my_icons.dart';
+import 'package:messanger_test/components/my_send_text_field.dart';
+
 
 class ChatScreen extends StatefulWidget {
   final String receiverUserEmail;
@@ -19,6 +23,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,7 +43,36 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUsername),
+        title: Row(
+          children: [
+            //user avatar
+            CircleAvatar(
+              radius: 25,
+              child: Text(
+                widget.receiverUsername,
+              ),
+            ),
+
+            const SizedBox(
+              width: 10,
+            ),
+
+            //user name and check online/offline
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.receiverUsername,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+
+                Text('Не в сети', style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 10, color: searchTxtColor))
+              ],
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -64,11 +98,16 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading..');
         }
+        
+        List<DocumentSnapshot> reversedDocs = snapshot.data!.docs.reversed.toList();
 
-        return ListView(
-          children: snapshot.data!.docs
-              .map((document) => _buildMessageItem(document))
-              .toList(),
+        return ListView.builder(
+          reverse: true,
+          itemCount: reversedDocs.length,
+          itemBuilder: (context, index) {
+            DocumentSnapshot document = reversedDocs[index];
+            return _buildMessageItem(document);
+          },
         );
       },
     );
@@ -78,17 +117,42 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-    var aligment = (data['senderID'] == _auth.currentUser!.uid)
+    Alignment aligment = (data['senderID'] == _auth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
-    return Container(
+    Color colorMessege =
+        (data['senderID'] == _auth.currentUser!.uid) ? myMessegeColor : otherMessegeColor;
+      
+    Timestamp firestoreTimestamp = data['timestamp'];
+    DateTime dateTime = firestoreTimestamp.toDate();
+    String time = DateFormat('HH:mm').format(dateTime);
+
+    return Align(
       alignment: aligment,
-      child: Column(
-        children: [
-          Text(data['username']),
-          Text(data['message']),
-        ],
+      child: Container(
+        decoration: BoxDecoration(
+            color: colorMessege, borderRadius: BorderRadius.circular(20)),
+        margin: EdgeInsets.only(
+            top: MediaQuery.sizeOf(context).height / 70),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.7),
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.end,
+          children: [
+            Text(
+              data['message'],
+              softWrap: true,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+    
+            const SizedBox(
+              width: 7,
+            ),
+    
+            Text(time, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold,),)
+          ],
+        ),
       ),
     );
   }
@@ -96,16 +160,26 @@ class _ChatScreenState extends State<ChatScreen> {
   //build message input
   Widget _buildMessageInput() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        const SizedBox(
+          width: 15,
+        ),
+        MyIcons(icon: Image.asset('assets/icons/attach.png', color: Colors.black,), onTap: (){}),
+
         //text field
         Expanded(
-            child: MyTextField(
-                controller: _messageController,
-                hintText: 'enter message',
-                obsecureText: false)),
+            child: MySendTextField(
+                controller: _messageController,),),
 
         //send button
-        IconButton(onPressed: sendMessage, icon: const Icon(Icons.send))
+        MyIcons(icon:const Icon(Icons.send), onTap: (){
+          sendMessage();
+        }),
+        
+        const SizedBox(
+          width: 15,
+        ),
       ],
     );
   }

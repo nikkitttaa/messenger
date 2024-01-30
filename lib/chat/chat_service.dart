@@ -21,7 +21,7 @@ class ChatService extends ChangeNotifier {
 
     currentUsername = documents[0].data()['username'];
 
-    final Timestamp timestamp = Timestamp.now();
+    final DateTime timestamp = DateTime.now();
 
     //new messege
     Message newMessege = Message(
